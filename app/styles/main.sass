@@ -1,0 +1,472 @@
+@import 'map'
+
+@font-face
+    font-family: 'Fira Sans'
+    font-style: normal
+    font-weight: 400
+    src: local("Fira Sans"), local("FiraSans-Regular"), url("http://falloutinside.me/app/themes/fallout/styles/fonts/firasans.woff2") format("woff2"), url("http://falloutinside.me/app/themes/fallout/styles/fonts/firasans.woff") format("woff")
+
+@keyframes fade-in
+    0%
+        opacity: 0
+    100%
+        opacity: 1
+
+@keyframes fade-in-fancy
+    0%
+        opacity: 0
+        transform: translateY(50px)
+    100%
+        opacity: 1
+        transform: translateY(0)
+
+@keyframes fade-out
+    0%
+        opacity: 1
+    100%
+        opacity: 0
+
+@keyframes fade-out-fancy
+    0%
+        opacity: 1
+        transform: translateY(0)
+    100%
+        opacity: 0
+        transform: translateY(50px)
+
+html, body, #map
+    height: 100%
+
+body
+    font: 17px 'Fira Sans', sans-serif
+    margin: 0
+    overflow: hidden
+
+.loader
+    position: fixed
+    height: 100%
+    width: 100%
+    z-index: 1200
+    background: url('http://falloutinside.me/map/images/loader.gif') center center no-repeat #CCC
+
+    &.hide
+        animation: fade-out $duration forwards
+
+a
+    text-decoration: none
+
+.leaflet-popup h2
+    margin-bottom: 15px
+
+h2
+    text-align: center
+    line-height: 40px
+    font-size: 22px
+    margin: 0
+
+    a
+        color: #555
+
+button
+    cursor: pointer
+
+#buttons-social button, #button-help
+    border: 2px solid white
+    background: none
+    color: white
+    padding: 10px
+    width: 100%
+    height: 45px
+    margin-top: 10px
+    transition: border-color $duration
+
+    &:hover
+        border-color: $highlight
+
+#buttons-social
+    display: flex
+
+#button-vk
+    margin-right: 10px
+
+#button-vk, #button-google
+    flex-grow: 1
+
+#sidebar, #sidebar-pane
+    position: fixed
+    z-index: 1001
+    transition: transform $duration
+
+#sidebar
+    transform: translateX(-400px)
+    height: 200vh
+    width: 400px
+    background: rgba(30, 30, 30, .8)
+    color: white
+
+    &.pulled
+        transform: translateX(0)
+
+    &.pulled.help-shown
+        transform: translateX(0) translateY(-100vh)
+
+#sidebar-content
+    font-size: 15px
+    flex-grow: 1
+    overflow-y: auto
+    transition: opacity $duration, transform $duration
+
+.search-results #sidebar-content
+    opacity: 0
+    pointer-events: none
+    transform: translateY(50px)
+
+.search-result
+    margin-bottom: 10px
+    padding: 15px
+    background: #fff
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, .5)
+    color: #000
+
+    &:last-of-type
+        margin-bottom: 0
+
+    a
+        color: #000
+
+#sidebar-markers
+    height: 100vh
+    padding: 10px
+    box-sizing: border-box
+    display: flex
+    flex-direction: column
+
+#sidebar-help
+    height: 100vh
+    padding: 10px
+    overflow-y: auto
+
+header
+    font-size: 18px
+    font-weight: bold
+    margin: 10px 0
+
+header, .category
+    cursor: pointer
+    transition: opacity $duration
+
+header:hover, .category:hover, .category.disabled
+    opacity: .6
+
+.category
+    width: 50%
+    display: inline-block
+    padding: 5px
+    line-height: 17px
+    box-sizing: border-box
+    position: relative
+
+.category.disabled:hover
+    opacity: 1
+
+.category.disabled .category-title
+    text-decoration: line-through
+
+.category-title
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+    width: 150px
+    display: inline-block
+
+.category-amount
+    position: absolute
+    right: 10px
+
+.notice
+    position: fixed
+    bottom: 5vh
+    left: 40vw
+    width: 20vw
+    padding: 20px
+    border-radius: 10px
+    background: url("http://falloutinside.me/app/themes/fallout/images/dust.png") #dedbd6
+    box-shadow: 1px 1px 5px #555
+    z-index: 1000
+    box-sizing: border-box
+    opacity: 0
+    animation: fade-in-fancy $duration forwards
+
+    &.hide
+        animation: fade-out-fancy $duration forwards
+
+    .progress
+        background: $highlight
+        height: 8px
+        border: none
+        display: block
+        margin-top: 15px
+        transition: width 1s ease-in
+
+.float-right
+    float: right
+
+
+/* ===============
+
+#sidebar-open, #sidebar-back
+    position: fixed
+    top: 20px
+    width: 30px
+    height: 30px
+    z-index: 1100
+    cursor: pointer
+
+#sidebar-open *
+    transition: opacity 200ms ease,  all 300ms ease
+
+#sidebar-open
+    left: 15px
+    transform: translateX(0)
+    transition: border-top-color $duration, transform $duration
+
+    &.pulled
+        transform: translateX(400px)
+
+    &:hover div
+        border-top-color: $highlight
+
+    div
+        margin-bottom: 4px
+        border-right: 3px solid transparent
+        border-top: 3px solid #fff
+
+    div:nth-child(1)
+        transform: rotate(0deg)
+
+    div:nth-child(2)
+        margin-right: 5px
+
+    div:nth-child(3)
+        transform: rotate(0deg)
+        margin-right: 10px
+
+    &.opened div:nth-child(1)
+        transform: translateY(10px) rotate(45deg)
+        border-right: 0 solid transparent
+        margin: 0
+
+    &.opened div:nth-child(2)
+        opacity: 0
+
+    &.opened div:nth-child(3)
+        transform: rotate(-45deg)
+        border-right: 0 solid transparent
+        margin: 0
+
+/* ===============
+
+#sidebar-back
+    left: 350px
+    transform: translateY(-50px)
+    transition: transform $duration
+
+    &:hover div
+        background-color: $highlight
+
+    div
+        position: relative
+        background-color: #fff
+        height: 25px
+        width: 3px
+        margin: 0 auto
+        transition: background-color $duration
+
+        div:first-child
+            position: absolute
+            transform: rotate(35deg)
+            transform-origin: right top
+            height: 12px
+
+        div:last-child
+            position: absolute
+            transform: rotate(-35deg)
+            transform-origin: left top
+            height: 12px
+
+    &.shown
+        transform: translateY(0)
+
+/* ===============
+
+#sidebar-pane
+    left: 0
+    background: rgba(30, 30, 30, 0.3)
+    padding: 5px 10px
+    color: white
+    cursor: pointer
+    top: 0
+    height: 100%
+    width: 40px
+
+    &.pulled
+        transform: translateX(400px)
+
+#sidebar-search
+    position: relative
+    border: 2px solid white
+    min-height: 30px
+    margin: 10px 0
+    display: flex
+    transition: border $duration
+    overflow: hidden
+
+    input
+        flex-grow: 1
+        background: none
+        border: none
+        padding-left: 10px
+        color: white
+
+    button
+        width: 0
+        opacity: 0
+        background: white
+        border: none
+        padding: 5px 10px
+        transition: background $duration, width $duration, opacity $duration
+
+.search-results #sidebar-search,
+#sidebar-search:hover
+    border-color: $highlight
+
+.search-results #sidebar-search button,
+#sidebar-search:hover button
+    background: $highlight
+
+.clearable #sidebar-search button
+    width: 80px
+    opacity: 1
+
+@media (max-width: 600px)
+    #sidebar
+        transform: translateX(-100vw)
+        width: 100vw
+
+    #sidebar-pane
+        background: none
+
+    #sidebar-open.pulled
+        transform: translateX(0)
+
+    #sidebar-back
+        right: 20px
+        left: auto
+
+    .category-title
+        width: 35vw
+
+    .notice
+        bottom: 0
+        left: 0
+        width: 100%
+        border-radius: 0
+
+    .leaflet-popup-content
+        width: 100vw !important
+        box-sizing: border-box
+        padding: 13px 19px  // swap default margin to padding to make box-sizing work
+        margin: 0
+
+/* ===============
+
+.group
+    position: relative
+    margin-bottom: 30px
+
+.inputMaterial
+    font-size: 18px
+    padding: 10px 10px 10px 5px
+    display: block
+    width: 100%
+    box-sizing: border-box
+    border: none
+    border-bottom: 1px solid #777
+
+.inputMaterial:focus
+    outline: none
+    border-bottom: 3px solid $highlight
+
+label
+    color: #999
+    font-size: 14px
+    font-weight: normal
+    position: absolute
+    pointer-events: none
+    left: 5px
+    top: 10px
+    transition: all $duration
+
+.inputMaterial:focus ~ label, .inputMaterial:valid ~ label
+    top: -15px
+    font-size: 14px
+    color: lighten($highlight, 10%)
+
+/* =============
+
+$scale: 0.7
+$color: #fff
+
+.trash-can
+    position: fixed
+    bottom: 0
+    left: 0
+    width: 100%
+    z-index: 500
+    background: linear-gradient(transparent, rgba(0, 0, 0, .8))
+    animation: fade-in-fancy $duration forwards
+
+    &.hide
+        animation: fade-out-fancy $duration forwards
+
+.icon
+    position: relative
+    width: 200px * $scale
+    height: 200px * $scale
+    border-radius: 50%
+    margin: 0 auto
+    margin-bottom: 30px
+
+.trash-can:hover .lid, .trash-can:hover .lidcap
+    transform: rotate(10deg)
+    margin-bottom: 15px * $scale
+
+.lidcap, .lid, .bin
+    position: absolute
+
+.lidcap, .lid
+    border-top-left-radius: 4px * $scale
+    border-top-right-radius: 4px * $scale
+    background: $color
+    transition: transform .2s linear, margin .2s linear
+
+.lidcap
+    bottom: 138px * $scale
+    left: 90px * $scale
+    height: 10px * $scale
+    width: 20px * $scale
+
+.lid
+    bottom: 120px * $scale
+    left: 30px * $scale
+    width: 140px * $scale
+    height: 20px * $scale
+
+.bin
+    bottom: 0
+    left: 40px * $scale
+    width: 100px * $scale
+    border-top: 120px * $scale solid $color
+    border-left: 10px * $scale solid transparent
+    border-right: 10px * $scale solid transparent
+

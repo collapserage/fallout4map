@@ -1,0 +1,9 @@
+{
+  "name": "fallout-map",
+  "private": true,
+  "dependencies": {
+    "babel-polyfill": "*",
+    "fetch": "*",
+    "leaflet": "1.0.0-beta.2"
+  }
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="theme-color" content="#e58a15">
+        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+        <meta name="description" content="...">
+        <base href="http://falloutinside.me/map/">
+        <title>Карта Fallout 4</title>
+        <link rel="icon" href="/images/favicon-32x32.png" sizes="32x32">
+        <link rel="icon" href="/images/favicon-192x192.png" sizes="192x192">
+        <link rel="stylesheet" href="http://falloutinside.me/map/styles/vendor.css">
+        <link rel="stylesheet" href="http://falloutinside.me/map/styles/main.css">
+    </head>
+
+    <body>
+        <img class="preload" src="http://falloutinside.me/map/images/map-color.jpg" hidden>
+        <div class="loader"></div>
+
+        <div id="controls">
+            <div id="sidebar-open"><div></div><div></div><div></div></div>
+            <div id="sidebar-back"><div><div></div><div></div></div></div>
+            <div id="sidebar-pane"></div>
+        </div>
+
+        <aside id="sidebar">
+            <div id="sidebar-markers">
+                <h2>Карта Fallout 4</h2>
+
+                <div id="sidebar-search">
+                    <input type="search" placeholder="Поиск.." autocomplete="off">
+                    <button>Очистить</button>
+                </div>
+
+                <div id="sidebar-content">
+                    <section data-group="collectible">
+                        <header>Прокачка</header>
+                    </section>
+
+                    <section data-group="pickup">
+                        <header>Предметы</header>
+                    </section>
+
+                    <section data-group="location">
+                        <header>Локации</header>
+                    </section>
+                </div>
+
+                <div id="buttons-social">
+                    <button id="button-vk">Войти через ВК</button>
+                    <button id="button-google">Войти через Google</button>
+                </div>
+
+                <button id="button-help">Настройки и помощь</button>
+            </div>
+
+            <div id="sidebar-help">
+                <h2>Помощь</h2>
+                <p>Интерактивная карта Fallout 4 на русском языке с отмеченными локациями, пупсами, журналами, уникальным оружием и многим другим.</p>
+                <p>Предметы можно отмечать как найденные правой кнопкой мыши, при этом состояние карты автоматически сохраняется в кэш браузера. Чтобы случайно не потерять свои данные, войдите на сайт, и карта будет сохраняться на сервер.</p>
+                <p>Можно создавать свои заметки кликом правой кнопкой мыши по пустому месту на карте, также их можно свободно передвигать.</p>
+                <p>Для входа в полноэкранный режим нажмите клавишу F, для выхода - Esc.</p>
+            </div>
+        </aside>
+
+        <div id="map"></div>
+
+        <script src="http://falloutinside.me/map/scripts/vendor.js"></script>
+        <script src="http://falloutinside.me/map/scripts/main.js"></script>
+    </body>
+</html>

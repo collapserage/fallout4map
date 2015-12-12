@@ -1,0 +1,87 @@
+$duration: 0.3s
+$highlight: #295ea4
+
+.leaflet-popup-content-wrapper
+    border-radius: 4px
+
+.leaflet-popup-pane
+    z-index: 2100
+
+.leaflet-pane.custom-pane
+    opacity: 1
+    transition: opacity .6s, z-index $duration linear $duration
+
+.leaflet-pane.custom-pane.hidden
+    opacity: 0
+    pointer-events: none
+
+.collectible-pane .map-marker,
+.pickup-pane .map-marker,
+.leaflet-marker-pane .map-marker
+    padding: 10px
+    background: rgb(113, 124, 248)
+
+.pickup-pane .map-marker
+    background: rgb(248, 98, 87)
+
+.custom-pane:not(.location-pane)
+    z-index: 401
+
+.leaflet-pane.custom-pane:hover
+    z-index: 2000 !important
+
+body.tiny .map-icon
+    transform: scale(.7)
+
+body.little .map-icon
+    transform: scale(1)
+
+body.small .map-icon
+    transform: scale(1.2)
+
+.map-icon
+    transform: scale(1.4)
+    transition: $duration transform
+
+.map-marker
+    width: auto
+    height: auto
+    margin: -15px 0 0 -15px
+    transition: background $duration
+    padding: 10px
+    border-radius: 50%
+
+.map-marker.found
+    opacity: .4
+    z-index: 100
+
+.map-marker.hovered:not(.found)
+    position: relative
+    z-index: 2000 !important
+
+.collectible-pane .map-marker.hovered:not(.found),
+.pickup-pane .map-marker.hovered:not(.found),
+.searched:not(.found)
+    background: #00a42a
+
+.map-marker.finishAnimation:not(.found)::after,
+.map-marker.hovered:not(.found)::after
+    content: attr(data-name)
+    position: absolute
+    top: 40px
+    left: 50%
+    transform: translateX(-50%)
+    white-space: nowrap
+    font-weight: bold
+    font-size: 16px
+    background: rgba(34, 139, 34, 0.8)
+    padding: 5px
+    border-radius: 4px
+    transition: opacity $duration
+
+.map-marker.finishAnimation::after
+    opacity: 0
+
+.map-marker.hovered::after
+    opacity: 0
+    animation: fade-in $duration linear $duration forwards
